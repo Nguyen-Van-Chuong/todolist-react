@@ -1,13 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Plus } from "react-bootstrap-icons";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  addDoc,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 
 //

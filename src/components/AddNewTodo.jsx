@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import Modal from "./Modal";
-
-import { calendarItems } from "../constants";
-
 import moment from "moment/moment";
-import { addDoc, collection } from "firebase/firestore";
-//
+import Modal from "./Modal";
+import { calendarItems } from "../constants";
 import TodoForm from "./TodoForm";
 import { TodoContext } from "../context";
-import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 
 const AddNewTodo = () => {
@@ -52,15 +48,6 @@ const AddNewTodo = () => {
           projectName: todoProject,
         });
       };
-      // const currentDate = new Date();
-      // if (time < currentDate) {
-      //   toast.error("Choose time in future", {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //   });
-      //   return;
-      // } else {
-      // }
       setLoading(true);
       setTimeout(() => {
         addFirebase();
