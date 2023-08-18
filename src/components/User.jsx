@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import LoginPage from "../pages/LoginPage";
 
 const User = () => {
   // USESTATE
-  const [displayName, setDisplayName] = useState(null);
   // CONTEXT
   const { currentUser, logout } = useContext(AuthContext);
-  console.log("🚀 --> User --> currentUser:", currentUser);
   // Effect
 
   return (
