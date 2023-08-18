@@ -14,7 +14,6 @@ const SignupPage = () => {
   if (currentUser !== null) {
     navigate("/");
   }
-
   // state
   const [loading, setLoading] = useState(false);
   // hook-form
@@ -138,7 +137,7 @@ const SignupPage = () => {
                 type="submit"
                 className="relative flex justify-center w-full px-4 py-2 mt-10 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Login
+                Signup
               </button>
             )}
           </form>

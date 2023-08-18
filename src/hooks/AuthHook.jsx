@@ -19,11 +19,7 @@ export function useUser() {
   const auth = getAuth();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user);
-      } else {
-        return;
-      }
+      setCurrentUser(user);
     });
     return () => unsubscribe();
   }, []);
@@ -35,7 +31,7 @@ export function useUser() {
         .then((userCredential) => {
           // Signed in
           // const userq = userCredential;
-          console.log("🚀 --> .then --> userCredential:", userCredential);
+          // setCurrentUser(userCredential.user);
 
           toast.success("Logged in successfully", {
             position: "top-right",
@@ -70,38 +66,43 @@ export function useUser() {
   };
   const signup = async (email, password, name, phone) => {
     const auth = getAuth();
-    // Tạo một tài khoản người dùng trong bảng "users"
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, {
-          uid: user.uid,
-          userName: name,
-          email: user.email,
-          phone: phone,
-        });
-        await updateProfile(user, {
-          displayName: name,
-          phoneNumber: phone,
-        });
-
-        toast.success("Sign Up Success", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 3000,
-        });
+      // Update user profile and Firestore document
+      const userDocRef = doc(db, "users", user.uid);
+      await setDoc(userDocRef, {
+        uid: user.uid,
+        userName: name,
+        email: user.email,
+        phone: phone,
       });
-    navigate("/");
+
+      await updateProfile(user, {
+        displayName: name,
+        phoneNumber: phone,
+      });
+
+      setCurrentUser(user);
+
+      // Show success toast
+      toast.success("Sign Up Success", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      navigate("/");
+    } catch (error) {
+      const errorMessage = error.message;
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
   };
 
   return { currentUser, logout, signin, signup };

@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { TodoContextProvider } from "./context";
 import { AuthContextProvider } from "./context/AuthContext";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -19,6 +19,7 @@ root.render(
               <Route path="/login" element={<LoginPage />}></Route>
             </Route>
             <Route path="/signup" element={<SignupPage />}></Route>
+            <Route path="*" element={<Navigate to="/" />}></Route>
           </Routes>
         </TodoContextProvider>
       </AuthContextProvider>

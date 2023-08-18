@@ -23,6 +23,7 @@ export default function Input({
       <input
         {...register(name, rest)}
         type={type}
+        autocomplete="off"
         placeholder={placeholder}
         className={fixedInputClass}
         name={name}
