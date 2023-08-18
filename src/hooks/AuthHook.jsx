@@ -14,12 +14,19 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function useUser() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(
+    useState(() => {
+      // Try to get user from localStorage on initial load
+      const storedUser = localStorage.getItem("currentUser");
+      return storedUser ? JSON.parse(storedUser) : null;
+    })
+  );
   const navigate = useNavigate();
   const auth = getAuth();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+      localStorage.setItem("currentUser", JSON.stringify(user));
     });
     return () => unsubscribe();
   }, []);
